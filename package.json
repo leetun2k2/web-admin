@@ -12,7 +12,12 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "type-check": "tsc -b --noEmit",
-    "check": "tsc -b --noEmit && oxlint && prettier --check ."
+    "check": "tsc -b --noEmit && oxlint && prettier --check .",
+    "docker:build": "docker build -t web-admin .",
+    "docker:build:no-cache": "docker build --no-cache -t web-admin .",
+    "docker:up": "docker compose up -d --build",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f"
   },
   "dependencies": {
     "react": "^19.2.8",

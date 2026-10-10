@@ -1,0 +1,9 @@
+services:
+  web-admin:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: web-admin
+    restart: unless-stopped
+    ports:
+      - '8080:80'

@@ -33,3 +33,24 @@ If you are developing a production application, we recommend enabling type-aware
 ```
 
 See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+
+## Deployment with Docker & Nginx
+
+### Bun Scripts
+
+```bash
+# Build Docker image
+bun run docker:build
+
+# Build without cache
+bun run docker:build:no-cache
+
+# Run with Docker Compose
+bun run docker:up
+
+# Stop container
+bun run docker:down
+
+# View logs
+bun run docker:logs
+```
