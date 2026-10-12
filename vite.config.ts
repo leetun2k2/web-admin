@@ -1,4 +1,6 @@
+import path from 'node:path';
 import react, { reactCompilerPreset } from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 import babel from '@rolldown/plugin-babel';
 import { defineConfig, loadEnv } from 'vite';
 
@@ -8,7 +10,16 @@ export default defineConfig(({ mode }) => {
   const apiTarget = env.VITE_API_TARGET || 'http://anlew.local';
 
   return {
-    plugins: [react(), babel({ presets: [reactCompilerPreset()] })],
+    plugins: [
+      tailwindcss(),
+      react(),
+      babel({ presets: [reactCompilerPreset()] }),
+    ],
+    resolve: {
+      alias: {
+        '@': path.resolve(import.meta.dirname, './src'),
+      },
+    },
     server: {
       proxy: {
         '/api': {
