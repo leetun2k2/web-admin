@@ -18,7 +18,7 @@ export const authRoutes: RouteObject[] = [
       },
     ],
   },
-  // Shortcut chuyển hướng nhanh từ đường dẫn cấp 1 sang /auth/login
+  // Quick redirect shortcut from top-level /login to /auth/login
   {
     path: '/login',
     element: <Navigate to="/auth/login" replace />,

@@ -1,233 +1,92 @@
 import { Link } from 'react-router-dom';
+import { ArrowRight, Gauge, LayoutDashboard, ShieldCheck } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { buttonVariants } from '@/components/ui/button';
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 
 export const HomePage = () => {
   return (
-    <div
-      style={{
-        maxWidth: '1000px',
-        margin: '0 auto',
-        padding: '64px 24px',
-        width: '100%',
-      }}
-    >
+    <div className="mx-auto w-full max-w-5xl px-6 py-16">
       {/* Hero Section */}
-      <section style={{ textAlign: 'center', marginBottom: '64px' }}>
-        <div
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            padding: '6px 14px',
-            borderRadius: '999px',
-            backgroundColor: 'var(--accent-bg)',
-            border: '1px solid var(--accent-border)',
-            color: 'var(--accent)',
-            fontSize: '13px',
-            fontWeight: 600,
-            marginBottom: '20px',
-          }}
-        >
-          <span>🚀 Hệ thống Quản trị Web Admin 2026</span>
-        </div>
+      <section className="mb-16 flex flex-col items-center text-center">
+        <Badge variant="secondary" className="mb-5 px-3 py-1 text-xs">
+          Enterprise Management System
+        </Badge>
 
-        <h1
-          style={{
-            fontSize: '44px',
-            lineHeight: 1.2,
-            letterSpacing: '-1px',
-            margin: '0 0 20px',
-            color: 'var(--text-h)',
-          }}
-        >
-          Quản lý toàn diện hệ thống cùng{' '}
-          <span style={{ color: 'var(--accent)' }}>Anthony Lewis</span>
+        <h1 className="mb-5 text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+          Unified administration with{' '}
+          <span className="text-primary">Anthony Lewis</span>
         </h1>
 
-        <p
-          style={{
-            fontSize: '18px',
-            color: 'var(--text)',
-            maxWidth: '680px',
-            margin: '0 auto 36px',
-            lineHeight: 1.6,
-          }}
-        >
-          Trang quản trị tập trung mạnh mẽ, bảo mật cao và tối ưu tốc độ tải
-          trang với Vite &amp; React Router. Phục vụ quản lý dữ liệu, phân quyền
-          và giám sát.
+        <p className="mb-8 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+          A centralized control plane built for high-scale web administration,
+          granular access permissions, and continuous operations.
         </p>
 
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '16px',
-            flexWrap: 'wrap',
-          }}
-        >
+        <div className="flex flex-wrap items-center justify-center gap-4">
           <Link
             to="/auth/login"
-            style={{
-              padding: '12px 28px',
-              borderRadius: '8px',
-              background: 'var(--accent)',
-              color: '#fff',
-              textDecoration: 'none',
-              fontWeight: 600,
-              fontSize: '15px',
-              boxShadow: '0 4px 14px rgba(170, 59, 255, 0.3)',
-            }}
+            className={buttonVariants({ size: 'lg', className: 'gap-2' })}
           >
-            Đăng nhập quản trị
+            <span>Go to Admin Console</span>
+            <ArrowRight className="size-4" />
           </Link>
+          <a
+            href="https://github.com"
+            target="_blank"
+            rel="noreferrer"
+            className={buttonVariants({ variant: 'outline', size: 'lg' })}
+          >
+            Documentation
+          </a>
         </div>
       </section>
 
       {/* Feature Grid */}
-      <section
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: '24px',
-        }}
-      >
-        <div
-          style={{
-            padding: '28px',
-            borderRadius: '12px',
-            border: '1px solid var(--border)',
-            background: 'var(--bg)',
-          }}
-        >
-          <div
-            style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '8px',
-              backgroundColor: 'var(--accent-bg)',
-              color: 'var(--accent)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: 700,
-              marginBottom: '16px',
-            }}
-          >
-            ⚡
-          </div>
-          <h3
-            style={{
-              fontSize: '18px',
-              margin: '0 0 10px',
-              color: 'var(--text-h)',
-            }}
-          >
-            Hiệu Năng Vượt Trội
-          </h3>
-          <p
-            style={{
-              margin: 0,
-              fontSize: '14px',
-              lineHeight: 1.6,
-              color: 'var(--text)',
-            }}
-          >
-            Được đóng gói với Vite mới nhất kết hợp React Router hiện đại, tốc
-            độ chuyển trang tức thì và mượt mà.
-          </p>
-        </div>
+      <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <Card className="border-border shadow-sm transition-shadow hover:shadow">
+          <CardHeader>
+            <div className="mb-2 flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+              <Gauge className="size-5" />
+            </div>
+            <CardTitle className="text-lg">High Performance</CardTitle>
+            <CardDescription className="leading-relaxed">
+              Engineered with Vite and React Router for near-instant navigation
+              and low-latency data presentation.
+            </CardDescription>
+          </CardHeader>
+        </Card>
 
-        <div
-          style={{
-            padding: '28px',
-            borderRadius: '12px',
-            border: '1px solid var(--border)',
-            background: 'var(--bg)',
-          }}
-        >
-          <div
-            style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '8px',
-              backgroundColor: 'var(--accent-bg)',
-              color: 'var(--accent)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: 700,
-              marginBottom: '16px',
-            }}
-          >
-            🛡️
-          </div>
-          <h3
-            style={{
-              fontSize: '18px',
-              margin: '0 0 10px',
-              color: 'var(--text-h)',
-            }}
-          >
-            Bảo Mật Cao Cấp
-          </h3>
-          <p
-            style={{
-              margin: 0,
-              fontSize: '14px',
-              lineHeight: 1.6,
-              color: 'var(--text)',
-            }}
-          >
-            Hệ thống phân chia Auth Layout và Public Layout độc lập, sẵn sàng
-            tích hợp JWT Authentication và phân quyền.
-          </p>
-        </div>
+        <Card className="border-border shadow-sm transition-shadow hover:shadow">
+          <CardHeader>
+            <div className="mb-2 flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+              <ShieldCheck className="size-5" />
+            </div>
+            <CardTitle className="text-lg">Enterprise Security</CardTitle>
+            <CardDescription className="leading-relaxed">
+              Standardized security controls, isolated authentication workflows,
+              and strict role-based access management.
+            </CardDescription>
+          </CardHeader>
+        </Card>
 
-        <div
-          style={{
-            padding: '28px',
-            borderRadius: '12px',
-            border: '1px solid var(--border)',
-            background: 'var(--bg)',
-          }}
-        >
-          <div
-            style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '8px',
-              backgroundColor: 'var(--accent-bg)',
-              color: 'var(--accent)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: 700,
-              marginBottom: '16px',
-            }}
-          >
-            🎨
-          </div>
-          <h3
-            style={{
-              fontSize: '18px',
-              margin: '0 0 10px',
-              color: 'var(--text-h)',
-            }}
-          >
-            Giao Diện Tinh Tế
-          </h3>
-          <p
-            style={{
-              margin: 0,
-              fontSize: '14px',
-              lineHeight: 1.6,
-              color: 'var(--text)',
-            }}
-          >
-            Hỗ trợ Light/Dark mode tự nhiên, thiết kế responsive trên mọi kích
-            thước màn hình thiết bị.
-          </p>
-        </div>
+        <Card className="border-border shadow-sm transition-shadow hover:shadow sm:col-span-2 lg:col-span-1">
+          <CardHeader>
+            <div className="mb-2 flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+              <LayoutDashboard className="size-5" />
+            </div>
+            <CardTitle className="text-lg">Modern Design System</CardTitle>
+            <CardDescription className="leading-relaxed">
+              Powered by Tailwind CSS and accessible shadcn primitives with full
+              responsive support.
+            </CardDescription>
+          </CardHeader>
+        </Card>
       </section>
     </div>
   );
