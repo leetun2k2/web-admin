@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Check } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import {
   Card,
   CardContent,
@@ -18,6 +19,8 @@ export interface AuthLayoutProps {
 }
 
 export const AuthLayout = ({ children, title, subtitle }: AuthLayoutProps) => {
+  const { t } = useTranslation();
+
   return (
     <div className="flex min-h-svh w-full bg-background text-foreground">
       {/* Brand sidebar on large screens */}
@@ -31,46 +34,40 @@ export const AuthLayout = ({ children, title, subtitle }: AuthLayoutProps) => {
               Anthony Lewis
             </h1>
             <p className="text-xs text-muted-foreground">
-              Web Administration Portal
+              {t('auth.layout.portalTitle')}
             </p>
           </div>
         </div>
 
-        <div className="my-auto max-w-md space-y-6">
-          <div className="space-y-3">
-            <h2 className="text-3xl font-semibold tracking-tight text-foreground">
-              Secure and Intuitive Administration
-            </h2>
-            <p className="text-sm leading-relaxed text-muted-foreground">
-              A unified management console offering robust security, real-time
-              monitoring, and exceptional administrative performance.
-            </p>
-          </div>
+        <div className="my-auto max-w-sm space-y-6">
+          <h2 className="text-2xl font-semibold tracking-tight text-foreground">
+            {t('auth.layout.administration')}
+          </h2>
 
-          <ul className="space-y-3 text-sm text-foreground">
-            <li className="flex items-center gap-2.5">
-              <span className="flex size-5 items-center justify-center rounded-full bg-primary/10 text-primary">
-                <Check className="size-3" />
+          <ul className="space-y-2.5 text-sm text-foreground">
+            <li className="flex items-center gap-2">
+              <span className="flex size-4 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <Check className="size-2.5" aria-hidden="true" />
               </span>
-              <span>Multi-layer security &amp; granular access control</span>
+              <span>{t('auth.layout.features.rbac')}</span>
             </li>
-            <li className="flex items-center gap-2.5">
-              <span className="flex size-5 items-center justify-center rounded-full bg-primary/10 text-primary">
-                <Check className="size-3" />
+            <li className="flex items-center gap-2">
+              <span className="flex size-4 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <Check className="size-2.5" aria-hidden="true" />
               </span>
-              <span>Real-time system health and analytics</span>
+              <span>{t('auth.layout.features.monitoring')}</span>
             </li>
-            <li className="flex items-center gap-2.5">
-              <span className="flex size-5 items-center justify-center rounded-full bg-primary/10 text-primary">
-                <Check className="size-3" />
+            <li className="flex items-center gap-2">
+              <span className="flex size-4 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <Check className="size-2.5" aria-hidden="true" />
               </span>
-              <span>Streamlined workflow for administrators</span>
+              <span>{t('auth.layout.features.fastOps')}</span>
             </li>
           </ul>
         </div>
 
         <div className="text-xs text-muted-foreground">
-          © {CURRENT_YEAR} Anthony Lewis. All rights reserved.
+          © {CURRENT_YEAR} Anthony Lewis
         </div>
       </aside>
 
@@ -86,7 +83,7 @@ export const AuthLayout = ({ children, title, subtitle }: AuthLayoutProps) => {
               Anthony Lewis
             </h2>
             <p className="text-xs text-muted-foreground">
-              Web Administration Portal
+              {t('auth.layout.portalTitle')}
             </p>
           </div>
 
@@ -103,10 +100,6 @@ export const AuthLayout = ({ children, title, subtitle }: AuthLayoutProps) => {
             )}
             <CardContent>{children ?? <Outlet />}</CardContent>
           </Card>
-
-          <p className="text-center text-xs text-muted-foreground">
-            Need technical assistance? Contact system administration.
-          </p>
         </div>
       </main>
     </div>

@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { Link, Outlet } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { buttonVariants } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 
@@ -10,6 +11,8 @@ export interface PublicLayoutProps {
 }
 
 export const PublicLayout = ({ children }: PublicLayoutProps) => {
+  const { t } = useTranslation();
+
   return (
     <div className="flex min-h-svh flex-col bg-background text-foreground">
       <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
@@ -23,7 +26,7 @@ export const PublicLayout = ({ children }: PublicLayoutProps) => {
                 Anthony Lewis
               </span>
               <span className="text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
-                Web Admin
+                {t('publicLayout.brandSubtitle')}
               </span>
             </div>
           </Link>
@@ -33,7 +36,7 @@ export const PublicLayout = ({ children }: PublicLayoutProps) => {
               to="/"
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
-              Home
+              {t('publicLayout.nav.home')}
             </Link>
             <a
               href="https://github.com"
@@ -41,7 +44,7 @@ export const PublicLayout = ({ children }: PublicLayoutProps) => {
               rel="noreferrer"
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
-              Documentation
+              {t('publicLayout.nav.documentation')}
             </a>
           </nav>
 
@@ -50,7 +53,7 @@ export const PublicLayout = ({ children }: PublicLayoutProps) => {
               to="/auth/login"
               className={buttonVariants({ variant: 'outline', size: 'sm' })}
             >
-              Sign in
+              {t('publicLayout.actions.signIn')}
             </Link>
           </div>
         </div>
@@ -60,22 +63,20 @@ export const PublicLayout = ({ children }: PublicLayoutProps) => {
 
       <footer className="border-t border-border bg-muted/20 py-8">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 text-xs text-muted-foreground sm:flex-row">
-          <div>
-            © {CURRENT_YEAR} Anthony Lewis. Centralized management portal.
-          </div>
+          <div>© {CURRENT_YEAR} Anthony Lewis</div>
           <div className="flex items-center gap-4">
             <Link
               to="/auth/login"
               className="transition-colors hover:text-foreground"
             >
-              Sign in
+              {t('publicLayout.actions.signIn')}
             </Link>
             <Separator orientation="vertical" className="h-3" />
             <a
               href="#support"
               className="transition-colors hover:text-foreground"
             >
-              Support
+              {t('publicLayout.actions.support')}
             </a>
           </div>
         </div>

@@ -7,7 +7,8 @@ import { defineConfig, loadEnv } from 'vite';
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
-  const apiTarget = env.VITE_API_TARGET || 'http://anlew.local';
+  const target =
+    env.VITE_PROXY_TARGET || env.VITE_API_TARGET || 'http://admin.anlew.local';
 
   return {
     plugins: [
@@ -23,7 +24,12 @@ export default defineConfig(({ mode }) => {
     server: {
       proxy: {
         '/api': {
-          target: apiTarget,
+          target,
+          changeOrigin: true,
+          secure: false,
+        },
+        '/auth/callback': {
+          target,
           changeOrigin: true,
           secure: false,
         },

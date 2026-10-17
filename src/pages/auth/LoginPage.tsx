@@ -1,29 +1,72 @@
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { AlertCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Spinner } from '@/components/ui/spinner';
+import { authService } from '@/services';
 
 export const LoginPage = () => {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
+  const [localError, setLocalError] = useState<string | null>(null);
+  const [searchParams] = useSearchParams();
+  const errorParam = searchParams.get('error');
 
-  const handleGoogleLogin = () => {
+  const getTranslatedErrorMessage = (errorCode: string): string => {
+    switch (errorCode) {
+      case 'access_denied':
+        return t('auth.login.errors.access_denied');
+      case 'expired_request':
+        return t('auth.login.errors.expired_request');
+      case 'invalid_request':
+        return t('auth.login.errors.invalid_request');
+      case 'temporarily_unavailable':
+        return t('auth.login.errors.temporarily_unavailable');
+      case 'csrf_failed':
+        return t('auth.login.errors.csrf_failed');
+      default:
+        return t('auth.login.errors.default');
+    }
+  };
+
+  const activeError = errorParam
+    ? getTranslatedErrorMessage(errorParam)
+    : localError;
+
+  const handleGoogleLogin = async () => {
     setIsLoading(true);
-    // TODO: Integrate Google OAuth / Backend API
-    setTimeout(() => {
+    setLocalError(null);
+    try {
+      await authService.loginWithGoogle();
+    } catch {
+      setLocalError(t('auth.login.errors.temporarily_unavailable'));
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   return (
     <div className="flex flex-col gap-6">
-      <header className="space-y-1.5 text-center">
-        <h2 className="text-xl font-semibold tracking-tight text-foreground">
-          Admin Sign in
+      <header className="text-center">
+        <h2 className="text-2xl font-bold tracking-tight text-foreground">
+          {t('auth.login.title')}
         </h2>
-        <p className="text-xs leading-relaxed text-muted-foreground">
-          Sign in using your authorized organization Google account.
+        <p className="mt-1 text-sm text-muted-foreground">
+          {t('auth.login.subtitle')}
         </p>
       </header>
+
+      {activeError && (
+        <Alert variant="destructive" role="alert">
+          <AlertCircle className="size-4" aria-hidden="true" />
+          <AlertTitle className="sr-only">
+            {t('auth.login.errorTitle')}
+          </AlertTitle>
+          <AlertDescription>{activeError}</AlertDescription>
+        </Alert>
+      )}
 
       <div className="flex flex-col gap-4">
         <Button
@@ -32,12 +75,16 @@ export const LoginPage = () => {
           size="lg"
           onClick={handleGoogleLogin}
           disabled={isLoading}
-          className="w-full gap-3 font-medium"
+          aria-label={t('auth.login.googleAriaLabel')}
+          className="h-11 w-full gap-3 font-medium transition-colors"
         >
           {isLoading ? (
             <>
-              <Spinner className="size-4" />
-              <span>Signing in...</span>
+              <Spinner
+                className="size-4"
+                aria-label={t('common.status.loading')}
+              />
+              <span>{t('auth.login.processing')}</span>
             </>
           ) : (
             <>
@@ -65,19 +112,13 @@ export const LoginPage = () => {
                   fill="#EA4335"
                 />
               </svg>
-              <span>Continue with Google</span>
+              <span>{t('auth.login.continueWithGoogle')}</span>
             </>
           )}
         </Button>
       </div>
 
-      <div className="space-y-4">
-        <Separator />
-        <p className="text-center text-xs leading-relaxed text-muted-foreground">
-          Only Google accounts explicitly assigned to administrative roles can
-          access this portal.
-        </p>
-      </div>
+      <Separator />
     </div>
   );
 };

@@ -1,0 +1,106 @@
+{
+  "common": {
+    "actions": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "retry": "Try again",
+      "signIn": "Sign in",
+      "signOut": "Sign out"
+    },
+    "status": {
+      "loading": "Loading...",
+      "verifying": "Verifying sign in...",
+      "checkingSession": "Checking session..."
+    },
+    "errors": {
+      "unexpected": "Something went wrong. Please try again.",
+      "sessionCheckFailed": "Unable to verify authentication session. Please try again.",
+      "serviceUnavailable": "Authentication service is temporarily unavailable. Please try again later."
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in",
+      "subtitle": "Select a provider to continue to Anthony Lewis admin.",
+      "errorTitle": "Authentication Error",
+      "continueWithGoogle": "Continue with Google",
+      "googleAriaLabel": "Sign in with Google",
+      "processing": "Signing in...",
+      "errors": {
+        "access_denied": "Sign in request was canceled or access was denied.",
+        "expired_request": "The sign in attempt expired. Please try again.",
+        "invalid_request": "Invalid sign in request. Please check parameters.",
+        "temporarily_unavailable": "Authentication service is temporarily unavailable. Please try again later.",
+        "csrf_failed": "Security validation failed. Please try again.",
+        "default": "An error occurred during authentication. Please try again."
+      }
+    },
+    "callback": {
+      "verifying": "Verifying sign in..."
+    },
+    "layout": {
+      "portalTitle": "Web Administration Portal",
+      "administration": "Administration",
+      "features": {
+        "rbac": "Role-based access",
+        "monitoring": "System monitoring",
+        "fastOps": "Fast operations"
+      },
+      "copyright": "Anthony Lewis"
+    }
+  },
+  "home": {
+    "badge": "Admin Portal",
+    "title": "Anthony Lewis",
+    "subtitle": "Centralized management console and operations.",
+    "userCard": {
+      "title": "Administrator Profile",
+      "description": "Active session and profile details",
+      "userId": "User ID",
+      "identityId": "Identity ID",
+      "email": "Email",
+      "displayName": "Display Name",
+      "notProvided": "Not provided",
+      "avatarAlt": "User avatar",
+      "defaultAvatarAlt": "Default user avatar",
+      "logout": "Sign out",
+      "loggingOut": "Signing out...",
+      "logoutErrorTitle": "Sign out failed",
+      "logoutError": "Unable to sign out. Please try again."
+    },
+    "features": {
+      "performance": {
+        "title": "High Performance",
+        "description": "Fast navigation and real-time updates."
+      },
+      "security": {
+        "title": "Secure",
+        "description": "Role-based access and protected workflows."
+      },
+      "controlPlane": {
+        "title": "Control Plane",
+        "description": "Unified tools for system administration."
+      }
+    },
+    "actions": {
+      "docs": "Docs"
+    }
+  },
+  "publicLayout": {
+    "brandSubtitle": "Web Admin",
+    "nav": {
+      "home": "Home",
+      "documentation": "Documentation"
+    },
+    "actions": {
+      "signIn": "Sign in",
+      "support": "Support"
+    }
+  },
+  "guard": {
+    "checking": "Checking authentication...",
+    "errorTitle": "Unable to verify session",
+    "errorMessage": "A network or server error occurred while verifying your session.",
+    "retry": "Try again"
+  }
+}

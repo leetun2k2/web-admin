@@ -17,17 +17,16 @@ export const NotFoundPage = () => {
           <div className="text-6xl font-extrabold tracking-tight text-primary">
             404
           </div>
-          <CardTitle className="text-2xl">Page Not Found</CardTitle>
-          <CardDescription className="text-sm leading-relaxed">
-            The page you are looking for does not exist, has been moved, or is
-            temporarily unavailable.
+          <CardTitle className="text-xl">Page Not Found</CardTitle>
+          <CardDescription className="text-xs">
+            The requested page does not exist.
           </CardDescription>
         </CardHeader>
-        <CardContent className="pt-6">
+        <CardContent className="pt-4">
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Link to="/" className={buttonVariants({ className: 'gap-2' })}>
               <ArrowLeft className="size-4" />
-              <span>Return to Home</span>
+              <span>Home</span>
             </Link>
             <Link
               to="/auth/login"
@@ -37,7 +36,7 @@ export const NotFoundPage = () => {
               })}
             >
               <LogIn className="size-4" />
-              <span>Admin Sign In</span>
+              <span>Sign In</span>
             </Link>
           </div>
         </CardContent>
