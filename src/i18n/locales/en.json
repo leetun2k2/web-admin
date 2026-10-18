@@ -185,7 +185,8 @@
       "displayName": "Display Name",
       "displayNamePlaceholder": "e.g. Jane Doe",
       "avatarUrl": "Avatar URL",
-      "avatarUrlPlaceholder": "https://example.com/avatar.png"
+      "avatarUrlPlaceholder": "https://example.com/avatar.png",
+      "readOnly": "Read-only"
     },
     "save": "Save changes",
     "success": "Profile updated successfully.",
@@ -220,6 +221,8 @@
       "save": "Save changes",
       "cancel": "Cancel",
       "confirm": "Confirm",
+      "clear": "Clear",
+      "clearSearch": "Clear search",
       "createdAt": "Created",
       "updatedAt": "Updated",
       "success": "Action completed successfully.",
@@ -265,7 +268,11 @@
       "editTitle": "Edit Role",
       "roleKey": "Key",
       "roleName": "Name",
-      "deleteConfirm": "Are you sure you want to delete this role? This cannot be undone."
+      "deleteConfirm": "Are you sure you want to delete this role? This cannot be undone.",
+      "deleteInUseWarning": "This role is currently assigned to {{count}} user(s). Roles in use cannot be deleted. Please remove this role from all assigned users before deleting.",
+      "deleteAdminWarning": "The admin role cannot be deleted as it is required for administrative access.",
+      "cannotDeleteInUse": "Role is in use",
+      "cannotDeleteAdmin": "Admin role cannot be deleted"
     },
     "sessions": {
       "title": "Sessions",

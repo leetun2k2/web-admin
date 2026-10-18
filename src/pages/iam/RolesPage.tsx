@@ -1,6 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ChevronLeft, ChevronRight, Edit, Plus, Trash2 } from 'lucide-react';
+import {
+  AlertTriangle,
+  ChevronLeft,
+  ChevronRight,
+  Edit,
+  Plus,
+  Trash2,
+} from 'lucide-react';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import {
@@ -138,7 +146,7 @@ export const RolesPage = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="w-full min-w-0 space-y-6">
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
@@ -164,82 +172,84 @@ export const RolesPage = () => {
             </div>
           )}
 
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>{t('iam.roles.colKey')}</TableHead>
-                <TableHead>{t('iam.roles.colName')}</TableHead>
-                <TableHead>{t('iam.roles.colUsers')}</TableHead>
-                <TableHead>{t('iam.roles.colCreated')}</TableHead>
-                <TableHead className="text-right">
-                  {t('iam.common.actions')}
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {loading ? (
+          <div className="w-full min-w-0 overflow-x-auto">
+            <Table>
+              <TableHeader>
                 <TableRow>
-                  <TableCell
-                    colSpan={5}
-                    className="h-24 text-center text-muted-foreground"
-                  >
-                    {t('iam.common.loading')}
-                  </TableCell>
+                  <TableHead>{t('iam.roles.colKey')}</TableHead>
+                  <TableHead>{t('iam.roles.colName')}</TableHead>
+                  <TableHead>{t('iam.roles.colUsers')}</TableHead>
+                  <TableHead>{t('iam.roles.colCreated')}</TableHead>
+                  <TableHead className="text-right">
+                    {t('iam.common.actions')}
+                  </TableHead>
                 </TableRow>
-              ) : roles.length === 0 ? (
-                <TableRow>
-                  <TableCell
-                    colSpan={5}
-                    className="h-24 text-center text-muted-foreground"
-                  >
-                    {t('iam.common.noData')}
-                  </TableCell>
-                </TableRow>
-              ) : (
-                roles.map((r) => (
-                  <TableRow key={r.id}>
-                    <TableCell className="font-mono text-xs font-semibold text-foreground">
-                      {r.key}
-                    </TableCell>
-                    <TableCell className="font-medium text-foreground">
-                      {r.name}
-                    </TableCell>
-                    <TableCell className="text-muted-foreground">
-                      {r.user_count}
-                    </TableCell>
-                    <TableCell className="text-xs text-muted-foreground">
-                      {new Date(r.created_at).toLocaleDateString()}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <div className="flex items-center justify-end gap-1">
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon-sm"
-                          onClick={() => handleOpenEdit(r)}
-                          aria-label={t('iam.common.edit')}
-                          title={t('iam.common.edit')}
-                        >
-                          <Edit className="size-4" />
-                        </Button>
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon-sm"
-                          onClick={() => handleOpenDelete(r)}
-                          aria-label={t('iam.common.delete')}
-                          title={t('iam.common.delete')}
-                          className="text-destructive"
-                        >
-                          <Trash2 className="size-4" />
-                        </Button>
-                      </div>
+              </TableHeader>
+              <TableBody>
+                {loading ? (
+                  <TableRow>
+                    <TableCell
+                      colSpan={5}
+                      className="h-24 text-center text-muted-foreground"
+                    >
+                      {t('iam.common.loading')}
                     </TableCell>
                   </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
+                ) : roles.length === 0 ? (
+                  <TableRow>
+                    <TableCell
+                      colSpan={5}
+                      className="h-24 text-center text-muted-foreground"
+                    >
+                      {t('iam.common.noData')}
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  roles.map((r) => (
+                    <TableRow key={r.id}>
+                      <TableCell className="font-mono text-xs font-semibold text-foreground">
+                        {r.key}
+                      </TableCell>
+                      <TableCell className="font-medium text-foreground">
+                        {r.name}
+                      </TableCell>
+                      <TableCell className="text-muted-foreground">
+                        {r.user_count}
+                      </TableCell>
+                      <TableCell className="text-xs text-muted-foreground">
+                        {new Date(r.created_at).toLocaleDateString()}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex items-center justify-end gap-1">
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon-sm"
+                            onClick={() => handleOpenEdit(r)}
+                            aria-label={t('iam.common.edit')}
+                            title={t('iam.common.edit')}
+                          >
+                            <Edit className="size-4" />
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon-sm"
+                            onClick={() => handleOpenDelete(r)}
+                            aria-label={t('iam.common.delete')}
+                            title={t('iam.common.delete')}
+                            className="text-destructive"
+                          >
+                            <Trash2 className="size-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </div>
 
           {/* Pagination bar */}
           <div className="flex items-center justify-between border-t border-border px-4 py-3 sm:px-6">
@@ -340,7 +350,7 @@ export const RolesPage = () => {
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
-        <DialogContent className="sm:max-w-sm">
+        <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle>{t('iam.common.delete')}</DialogTitle>
             <DialogDescription>
@@ -354,10 +364,39 @@ export const RolesPage = () => {
             </div>
           )}
 
-          <div className="py-2 text-xs text-muted-foreground">
-            {t('iam.roles.colName')}:{' '}
-            <strong className="text-foreground">{deleteRoleItem?.name}</strong>{' '}
-            ({deleteRoleItem?.key})
+          <div className="space-y-2 py-2 text-sm">
+            <div className="flex justify-between text-xs text-muted-foreground">
+              <span>{t('iam.roles.colName')}:</span>
+              <span className="font-medium text-foreground">
+                {deleteRoleItem?.name} ({deleteRoleItem?.key})
+              </span>
+            </div>
+            <div className="flex justify-between text-xs text-muted-foreground">
+              <span>{t('iam.roles.colUsers')}:</span>
+              <span className="font-medium text-foreground">
+                {deleteRoleItem?.user_count ?? 0}
+              </span>
+            </div>
+
+            {deleteRoleItem?.key === 'admin' ? (
+              <Alert variant="destructive" className="mt-3">
+                <AlertTriangle className="size-4" aria-hidden="true" />
+                <AlertTitle>{t('iam.roles.cannotDeleteAdmin')}</AlertTitle>
+                <AlertDescription className="mt-1 text-xs">
+                  {t('iam.roles.deleteAdminWarning')}
+                </AlertDescription>
+              </Alert>
+            ) : (deleteRoleItem?.user_count ?? 0) > 0 ? (
+              <Alert variant="destructive" className="mt-3">
+                <AlertTriangle className="size-4" aria-hidden="true" />
+                <AlertTitle>{t('iam.roles.cannotDeleteInUse')}</AlertTitle>
+                <AlertDescription className="mt-1 text-xs">
+                  {t('iam.roles.deleteInUseWarning', {
+                    count: deleteRoleItem?.user_count,
+                  })}
+                </AlertDescription>
+              </Alert>
+            ) : null}
           </div>
           <DialogFooter>
             <Button
@@ -372,7 +411,11 @@ export const RolesPage = () => {
               type="button"
               variant="destructive"
               onClick={handleConfirmDelete}
-              disabled={actionLoading}
+              disabled={
+                actionLoading ||
+                deleteRoleItem?.key === 'admin' ||
+                (deleteRoleItem?.user_count ?? 0) > 0
+              }
             >
               {actionLoading
                 ? t('iam.common.loading')

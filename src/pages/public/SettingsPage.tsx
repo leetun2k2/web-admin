@@ -33,8 +33,8 @@ export const SettingsPage = () => {
   }, []);
 
   return (
-    <div className="mx-auto w-full max-w-5xl px-6 py-12 sm:py-16">
-      <section className="mb-10">
+    <div className="max-w-4xl space-y-6">
+      <section className="mb-2">
         <Badge variant="secondary" className="mb-3 text-xs font-medium">
           {t('settings.badge')}
         </Badge>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, Lock } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
@@ -96,8 +96,8 @@ export const ProfilePage = () => {
   }
 
   return (
-    <div className="mx-auto w-full max-w-3xl px-6 py-12 sm:py-16">
-      <section className="mb-10">
+    <div className="max-w-3xl space-y-6">
+      <section className="mb-2">
         <Badge variant="secondary" className="mb-3 text-xs font-medium">
           {t('profile.badge')}
         </Badge>
@@ -140,21 +140,33 @@ export const ProfilePage = () => {
             )}
 
             <div>
-              <Label htmlFor="profile-user-id" className="mb-1.5">
-                {t('profile.fields.userId')}
-              </Label>
+              <div className="mb-1.5 flex items-center justify-between">
+                <Label htmlFor="profile-user-id">
+                  {t('profile.fields.userId')}
+                </Label>
+                <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                  <Lock className="size-3" aria-hidden="true" />
+                  {t('profile.fields.readOnly')}
+                </span>
+              </div>
               <Input
                 id="profile-user-id"
                 value={user?.user_id ?? ''}
                 readOnly
-                className="font-mono text-sm"
+                className="font-mono text-xs"
               />
             </div>
 
             <div>
-              <Label htmlFor="profile-email" className="mb-1.5">
-                {t('profile.fields.email')}
-              </Label>
+              <div className="mb-1.5 flex items-center justify-between">
+                <Label htmlFor="profile-email">
+                  {t('profile.fields.email')}
+                </Label>
+                <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                  <Lock className="size-3" aria-hidden="true" />
+                  {t('profile.fields.readOnly')}
+                </span>
+              </div>
               <Input
                 id="profile-email"
                 value={user?.email ?? t('home.userCard.notProvided')}

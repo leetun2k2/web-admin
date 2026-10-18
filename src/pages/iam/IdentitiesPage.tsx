@@ -68,7 +68,7 @@ export const IdentitiesPage = () => {
   }, [page, pageSize, providerFilter, t]);
 
   return (
-    <div className="space-y-6">
+    <div className="w-full min-w-0 space-y-6">
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
@@ -118,74 +118,78 @@ export const IdentitiesPage = () => {
             </div>
           )}
 
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>{t('iam.identities.colProvider')}</TableHead>
-                <TableHead>{t('iam.identities.colSubject')}</TableHead>
-                <TableHead>{t('iam.identities.colUserEmail')}</TableHead>
-                <TableHead>{t('iam.identities.colName')}</TableHead>
-                <TableHead>{t('iam.identities.colVerified')}</TableHead>
-                <TableHead>{t('iam.identities.colCreated')}</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {loading ? (
+          <div className="w-full min-w-0 overflow-x-auto">
+            <Table>
+              <TableHeader>
                 <TableRow>
-                  <TableCell
-                    colSpan={6}
-                    className="h-24 text-center text-muted-foreground"
-                  >
-                    {t('iam.common.loading')}
-                  </TableCell>
+                  <TableHead>{t('iam.identities.colProvider')}</TableHead>
+                  <TableHead>{t('iam.identities.colSubject')}</TableHead>
+                  <TableHead>{t('iam.identities.colUserEmail')}</TableHead>
+                  <TableHead>{t('iam.identities.colName')}</TableHead>
+                  <TableHead>{t('iam.identities.colVerified')}</TableHead>
+                  <TableHead>{t('iam.identities.colCreated')}</TableHead>
                 </TableRow>
-              ) : identities.length === 0 ? (
-                <TableRow>
-                  <TableCell
-                    colSpan={6}
-                    className="h-24 text-center text-muted-foreground"
-                  >
-                    {t('iam.common.noData')}
-                  </TableCell>
-                </TableRow>
-              ) : (
-                identities.map((item) => (
-                  <TableRow key={item.id}>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <Globe className="size-4 text-primary" />
-                        <span className="font-medium capitalize text-foreground">
-                          {item.provider}
-                        </span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="font-mono text-xs text-muted-foreground">
-                      {item.provider_subject}
-                    </TableCell>
-                    <TableCell className="text-foreground">
-                      {item.user_email || '—'}
-                    </TableCell>
-                    <TableCell className="text-foreground">
-                      {item.display_name || '—'}
-                    </TableCell>
-                    <TableCell>
-                      <Badge
-                        variant={item.email_verified ? 'default' : 'secondary'}
-                        className="text-xs"
-                      >
-                        {item.email_verified
-                          ? t('iam.identities.verified')
-                          : t('iam.identities.unverified')}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-xs text-muted-foreground">
-                      {new Date(item.created_at).toLocaleDateString()}
+              </TableHeader>
+              <TableBody>
+                {loading ? (
+                  <TableRow>
+                    <TableCell
+                      colSpan={6}
+                      className="h-24 text-center text-muted-foreground"
+                    >
+                      {t('iam.common.loading')}
                     </TableCell>
                   </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
+                ) : identities.length === 0 ? (
+                  <TableRow>
+                    <TableCell
+                      colSpan={6}
+                      className="h-24 text-center text-muted-foreground"
+                    >
+                      {t('iam.common.noData')}
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  identities.map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell>
+                        <div className="flex items-center gap-2">
+                          <Globe className="size-4 text-primary" />
+                          <span className="font-medium capitalize text-foreground">
+                            {item.provider}
+                          </span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="font-mono text-xs text-muted-foreground">
+                        {item.provider_subject}
+                      </TableCell>
+                      <TableCell className="text-foreground">
+                        {item.user_email || '—'}
+                      </TableCell>
+                      <TableCell className="text-foreground">
+                        {item.display_name || '—'}
+                      </TableCell>
+                      <TableCell>
+                        <Badge
+                          variant={
+                            item.email_verified ? 'default' : 'secondary'
+                          }
+                          className="text-xs"
+                        >
+                          {item.email_verified
+                            ? t('iam.identities.verified')
+                            : t('iam.identities.unverified')}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="text-xs text-muted-foreground">
+                        {new Date(item.created_at).toLocaleDateString()}
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </div>
 
           {/* Pagination bar */}
           <div className="flex items-center justify-between border-t border-border px-4 py-3 sm:px-6">

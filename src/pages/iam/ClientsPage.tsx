@@ -204,7 +204,7 @@ export const ClientsPage = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="w-full min-w-0 space-y-6">
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
@@ -230,105 +230,121 @@ export const ClientsPage = () => {
             </div>
           )}
 
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>{t('iam.clients.colProvider')}</TableHead>
-                <TableHead>{t('iam.clients.colId')}</TableHead>
-                <TableHead>{t('iam.clients.colName')}</TableHead>
-                <TableHead>{t('iam.clients.colCallbackUrl')}</TableHead>
-                <TableHead>{t('iam.clients.colRedirects')}</TableHead>
-                <TableHead>{t('iam.clients.colStatus')}</TableHead>
-                <TableHead className="text-right">
-                  {t('iam.common.actions')}
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {loading ? (
+          <div className="w-full min-w-0 overflow-x-auto">
+            <Table>
+              <TableHeader>
                 <TableRow>
-                  <TableCell
-                    colSpan={7}
-                    className="h-24 text-center text-muted-foreground"
-                  >
-                    {t('iam.common.loading')}
-                  </TableCell>
+                  <TableHead>{t('iam.clients.colProvider')}</TableHead>
+                  <TableHead>{t('iam.clients.colId')}</TableHead>
+                  <TableHead>{t('iam.clients.colName')}</TableHead>
+                  <TableHead>{t('iam.clients.colCallbackUrl')}</TableHead>
+                  <TableHead>{t('iam.clients.colRedirects')}</TableHead>
+                  <TableHead>{t('iam.clients.colStatus')}</TableHead>
+                  <TableHead className="text-right">
+                    {t('iam.common.actions')}
+                  </TableHead>
                 </TableRow>
-              ) : clients.length === 0 ? (
-                <TableRow>
-                  <TableCell
-                    colSpan={7}
-                    className="h-24 text-center text-muted-foreground"
-                  >
-                    {t('iam.common.noData')}
-                  </TableCell>
-                </TableRow>
-              ) : (
-                clients.map((c) => (
-                  <TableRow key={c.id}>
-                    <TableCell>
-                      <Badge variant="outline" className="text-xs capitalize">
-                        {c.provider}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="font-mono text-xs text-muted-foreground">
-                      {c.client_id}
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <Fingerprint className="size-4 text-primary" />
-                        <span className="font-semibold text-foreground">
-                          {c.name}
-                        </span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="max-w-[200px] truncate text-xs text-muted-foreground">
-                      {c.redirect_url || '—'}
-                    </TableCell>
-                    <TableCell className="max-w-[200px] truncate text-xs text-muted-foreground">
-                      {c.redirect_uris.length > 0
-                        ? c.redirect_uris.join(', ')
-                        : '—'}
-                    </TableCell>
-                    <TableCell>
-                      <Badge
-                        variant={c.enabled ? 'default' : 'secondary'}
-                        className="text-xs"
-                      >
-                        {c.enabled
-                          ? t('iam.common.enabled')
-                          : t('iam.common.disabled')}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <div className="flex items-center justify-end gap-1">
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon-sm"
-                          onClick={() => handleOpenDetails(c)}
-                          aria-label={t('iam.clients.viewDetails')}
-                          title={t('iam.clients.viewDetails')}
-                        >
-                          <Eye className="size-4" />
-                        </Button>
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleOpenToggle(c)}
-                        >
-                          {c.enabled
-                            ? t('iam.clients.disable')
-                            : t('iam.clients.enable')}
-                        </Button>
-                      </div>
+              </TableHeader>
+              <TableBody>
+                {loading ? (
+                  <TableRow>
+                    <TableCell
+                      colSpan={7}
+                      className="h-24 text-center text-muted-foreground"
+                    >
+                      {t('iam.common.loading')}
                     </TableCell>
                   </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
+                ) : clients.length === 0 ? (
+                  <TableRow>
+                    <TableCell
+                      colSpan={7}
+                      className="h-24 text-center text-muted-foreground"
+                    >
+                      {t('iam.common.noData')}
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  clients.map((c) => (
+                    <TableRow key={c.id}>
+                      <TableCell>
+                        <Badge variant="outline" className="text-xs capitalize">
+                          {c.provider}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="font-mono text-xs text-muted-foreground">
+                        {c.client_id}
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-2">
+                          <Fingerprint className="size-4 text-primary" />
+                          <span className="font-semibold text-foreground">
+                            {c.name}
+                          </span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="max-w-[200px] text-xs text-muted-foreground">
+                        <div
+                          className="max-w-[200px] truncate"
+                          title={c.redirect_url || undefined}
+                        >
+                          {c.redirect_url || '—'}
+                        </div>
+                      </TableCell>
+                      <TableCell className="max-w-[200px] text-xs text-muted-foreground">
+                        <div
+                          className="max-w-[200px] truncate"
+                          title={
+                            c.redirect_uris.length > 0
+                              ? c.redirect_uris.join(', ')
+                              : undefined
+                          }
+                        >
+                          {c.redirect_uris.length > 0
+                            ? c.redirect_uris.join(', ')
+                            : '—'}
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <Badge
+                          variant={c.enabled ? 'default' : 'secondary'}
+                          className="text-xs"
+                        >
+                          {c.enabled
+                            ? t('iam.common.enabled')
+                            : t('iam.common.disabled')}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex items-center justify-end gap-1">
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon-sm"
+                            onClick={() => handleOpenDetails(c)}
+                            aria-label={t('iam.clients.viewDetails')}
+                            title={t('iam.clients.viewDetails')}
+                          >
+                            <Eye className="size-4" />
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleOpenToggle(c)}
+                          >
+                            {c.enabled
+                              ? t('iam.clients.disable')
+                              : t('iam.clients.enable')}
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </div>
 
           {/* Pagination bar */}
           <div className="flex items-center justify-between border-t border-border px-4 py-3 sm:px-6">

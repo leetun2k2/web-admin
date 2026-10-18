@@ -152,7 +152,7 @@ export const HomePage = () => {
   ).toUpperCase();
 
   return (
-    <div className="mx-auto w-full max-w-5xl px-6 py-10 sm:py-14">
+    <div className="space-y-8">
       {/* Hero Section */}
       <section className="mb-10">
         <Badge variant="secondary" className="mb-3 text-xs font-medium">

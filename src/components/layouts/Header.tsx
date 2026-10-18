@@ -3,13 +3,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import {
   ChevronDown,
   ExternalLink,
+  Fingerprint,
   Home,
+  KeyRound,
   LogOut,
   Search,
   Settings,
+  ShieldCheck,
   User as UserIcon,
+  UserCheck,
+  Users,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { cn } from 'cn';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -32,23 +38,21 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Kbd, KbdGroup } from '@/components/ui/kbd';
-import { Separator } from '@/components/ui/separator';
-import { SidebarTrigger } from '@/components/ui/sidebar';
-import { authService, type UserProfile } from '@/services';
+import { authService, iamService, type UserProfile } from '@/services';
 
 export interface HeaderProps {
   user?: UserProfile | null;
-  showSidebarTrigger?: boolean;
+  /** True when rendered inside the app shell, where the sidebar already
+   * shows the brand logo, so the header should not repeat it. */
+  hideBrand?: boolean;
 }
 
-export const Header = ({
-  user: propUser,
-  showSidebarTrigger = false,
-}: HeaderProps) => {
+export const Header = ({ user: propUser, hideBrand = false }: HeaderProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [fetchedUser, setFetchedUser] = useState<UserProfile | null>(null);
   const [isCommandOpen, setIsCommandOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     if (propUser !== undefined) {
@@ -73,6 +77,25 @@ export const Header = ({
   }, [propUser]);
 
   const user = propUser !== undefined ? propUser : fetchedUser;
+
+  useEffect(() => {
+    let active = true;
+    iamService
+      .getUserAccess()
+      .then((access) => {
+        if (active) {
+          setIsAdmin(access.is_admin);
+        }
+      })
+      .catch(() => {
+        if (active) {
+          setIsAdmin(false);
+        }
+      });
+    return () => {
+      active = false;
+    };
+  }, [user]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -132,35 +155,34 @@ export const Header = ({
   return (
     <>
       <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-          {/* Left: Brand Logo & Optional Sidebar Trigger */}
-          <div className="flex shrink-0 items-center gap-2">
-            {showSidebarTrigger && (
-              <>
-                <SidebarTrigger className="-ml-1" />
-                <Separator
-                  orientation="vertical"
-                  className="mr-1 hidden h-4 sm:block"
-                />
-              </>
-            )}
-            <Link
-              to={showSidebarTrigger ? '/a' : '/'}
-              className="flex items-center gap-2.5 rounded-lg transition-opacity hover:opacity-90 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              <div className="flex size-9 items-center justify-center rounded-lg bg-primary text-base font-bold text-primary-foreground shadow-xs">
-                A
-              </div>
-              <div className="hidden flex-col sm:flex">
-                <span className="text-sm font-bold tracking-tight text-foreground">
-                  Anlew
-                </span>
-                <span className="text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
-                  {t('header.brandSubtitle')}
-                </span>
-              </div>
-            </Link>
-          </div>
+        <div
+          className={cn(
+            'flex items-center justify-between gap-4 px-4 py-3 sm:px-6',
+            hideBrand ? 'w-full lg:px-8' : 'mx-auto max-w-6xl',
+          )}
+        >
+          {/* Left: Brand Logo (hidden inside the app shell; the sidebar
+              already shows it and owns the collapse/expand toggle) */}
+          {!hideBrand && (
+            <div className="flex shrink-0 items-center gap-2">
+              <Link
+                to="/"
+                className="flex items-center gap-2.5 rounded-lg transition-opacity hover:opacity-90 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <div className="flex size-9 items-center justify-center rounded-lg bg-primary text-base font-bold text-primary-foreground shadow-xs">
+                  A
+                </div>
+                <div className="hidden flex-col sm:flex">
+                  <span className="text-sm font-bold tracking-tight text-foreground">
+                    Anlew
+                  </span>
+                  <span className="text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
+                    {t('header.brandSubtitle')}
+                  </span>
+                </div>
+              </Link>
+            </div>
+          )}
 
           {/* Middle: Quick search box combined with command palette */}
           <div className="flex flex-1 items-center justify-center px-2">
@@ -294,9 +316,7 @@ export const Header = ({
             >
               <CommandItem
                 onSelect={() =>
-                  executeCommand(() =>
-                    navigate(showSidebarTrigger ? '/a' : '/'),
-                  )
+                  executeCommand(() => navigate(hideBrand ? '/a' : '/'))
                 }
               >
                 <Home aria-hidden="true" />
@@ -313,6 +333,53 @@ export const Header = ({
                 <span>{t('header.menu.documentation')}</span>
               </CommandItem>
             </CommandGroup>
+            {isAdmin && (
+              <>
+                <CommandSeparator />
+                <CommandGroup heading={t('sidebar.nav.auth')}>
+                  <CommandItem
+                    onSelect={() =>
+                      executeCommand(() => navigate('/a/auth/users'))
+                    }
+                  >
+                    <Users aria-hidden="true" />
+                    <span>{t('sidebar.items.users')}</span>
+                  </CommandItem>
+                  <CommandItem
+                    onSelect={() =>
+                      executeCommand(() => navigate('/a/auth/identities'))
+                    }
+                  >
+                    <UserCheck aria-hidden="true" />
+                    <span>{t('sidebar.items.identities')}</span>
+                  </CommandItem>
+                  <CommandItem
+                    onSelect={() =>
+                      executeCommand(() => navigate('/a/auth/roles'))
+                    }
+                  >
+                    <KeyRound aria-hidden="true" />
+                    <span>{t('sidebar.items.roles')}</span>
+                  </CommandItem>
+                  <CommandItem
+                    onSelect={() =>
+                      executeCommand(() => navigate('/a/auth/sessions'))
+                    }
+                  >
+                    <ShieldCheck aria-hidden="true" />
+                    <span>{t('sidebar.items.sessions')}</span>
+                  </CommandItem>
+                  <CommandItem
+                    onSelect={() =>
+                      executeCommand(() => navigate('/a/auth/clients'))
+                    }
+                  >
+                    <Fingerprint aria-hidden="true" />
+                    <span>{t('sidebar.items.registrations')}</span>
+                  </CommandItem>
+                </CommandGroup>
+              </>
+            )}
             <CommandSeparator />
             <CommandGroup heading={t('header.commandPalette.groups.account')}>
               <CommandItem onSelect={() => executeCommand(handleProfile)}>

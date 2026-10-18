@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ChevronLeft, ChevronRight, Eye, Search, Shield } from 'lucide-react';
+import {
+  ChevronLeft,
+  ChevronRight,
+  Eye,
+  Search,
+  Shield,
+  X,
+} from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -110,6 +117,23 @@ export const UsersPage = () => {
     setSearch(searchInput);
   };
 
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchInput(value);
+    if (value === '' && search !== '') {
+      setPage(1);
+      setSearch('');
+    }
+  };
+
+  const handleClearSearch = () => {
+    setSearchInput('');
+    if (search !== '') {
+      setPage(1);
+      setSearch('');
+    }
+  };
+
   const handleOpenDetails = async (userId: string) => {
     setDetailsError(null);
     setDetailsOpen(true);
@@ -160,7 +184,7 @@ export const UsersPage = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="w-full min-w-0 space-y-6">
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
@@ -195,9 +219,19 @@ export const UsersPage = () => {
                     type="text"
                     placeholder={t('iam.common.search')}
                     value={searchInput}
-                    onChange={(e) => setSearchInput(e.target.value)}
-                    className="pl-8"
+                    onChange={handleSearchChange}
+                    className="pl-8 pr-8"
                   />
+                  {searchInput && (
+                    <button
+                      type="button"
+                      onClick={handleClearSearch}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 rounded p-0.5 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+                      aria-label={t('iam.common.clearSearch')}
+                    >
+                      <X className="size-4" aria-hidden="true" />
+                    </button>
+                  )}
                 </div>
               </div>
               <Button type="submit" variant="secondary" size="sm">
@@ -240,110 +274,112 @@ export const UsersPage = () => {
             </div>
           )}
 
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>{t('iam.users.colEmail')}</TableHead>
-                <TableHead>{t('iam.users.colDisplayName')}</TableHead>
-                <TableHead>{t('iam.users.colRoles')}</TableHead>
-                <TableHead className="text-right">
-                  {t('iam.common.actions')}
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {loading ? (
+          <div className="w-full min-w-0 overflow-x-auto">
+            <Table>
+              <TableHeader>
                 <TableRow>
-                  <TableCell
-                    colSpan={4}
-                    className="h-24 text-center text-muted-foreground"
-                  >
-                    {t('iam.common.loading')}
-                  </TableCell>
+                  <TableHead>{t('iam.users.colEmail')}</TableHead>
+                  <TableHead>{t('iam.users.colDisplayName')}</TableHead>
+                  <TableHead>{t('iam.users.colRoles')}</TableHead>
+                  <TableHead className="text-right">
+                    {t('iam.common.actions')}
+                  </TableHead>
                 </TableRow>
-              ) : users.length === 0 ? (
-                <TableRow>
-                  <TableCell
-                    colSpan={4}
-                    className="h-24 text-center text-muted-foreground"
-                  >
-                    {t('iam.common.noData')}
-                  </TableCell>
-                </TableRow>
-              ) : (
-                users.map((u) => (
-                  <TableRow key={u.id}>
-                    <TableCell>
-                      <div className="flex items-center gap-3">
-                        {u.avatar_url ? (
-                          <img
-                            src={u.avatar_url}
-                            alt=""
-                            className="size-8 rounded-full object-cover"
-                          />
-                        ) : (
-                          <div className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
-                            {(u.display_name ||
-                              u.email ||
-                              'U')[0].toUpperCase()}
-                          </div>
-                        )}
-                        <span className="text-foreground">
-                          {u.email || '—'}
-                        </span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-foreground">
-                      {u.display_name || '—'}
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex flex-wrap gap-1">
-                        {u.roles && u.roles.length > 0 ? (
-                          u.roles.map((r) => (
-                            <Badge
-                              key={r}
-                              variant="outline"
-                              className="text-xs"
-                            >
-                              {r}
-                            </Badge>
-                          ))
-                        ) : (
-                          <span className="text-xs text-muted-foreground">
-                            —
-                          </span>
-                        )}
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <div className="flex items-center justify-end gap-1">
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon-sm"
-                          onClick={() => handleOpenDetails(u.id)}
-                          aria-label={t('iam.users.viewDetails')}
-                          title={t('iam.users.viewDetails')}
-                        >
-                          <Eye className="size-4" />
-                        </Button>
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon-sm"
-                          onClick={() => handleOpenRoles(u)}
-                          aria-label={t('iam.users.manageRoles')}
-                          title={t('iam.users.manageRoles')}
-                        >
-                          <Shield className="size-4" />
-                        </Button>
-                      </div>
+              </TableHeader>
+              <TableBody>
+                {loading ? (
+                  <TableRow>
+                    <TableCell
+                      colSpan={4}
+                      className="h-24 text-center text-muted-foreground"
+                    >
+                      {t('iam.common.loading')}
                     </TableCell>
                   </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
+                ) : users.length === 0 ? (
+                  <TableRow>
+                    <TableCell
+                      colSpan={4}
+                      className="h-24 text-center text-muted-foreground"
+                    >
+                      {t('iam.common.noData')}
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  users.map((u) => (
+                    <TableRow key={u.id}>
+                      <TableCell>
+                        <div className="flex items-center gap-3">
+                          {u.avatar_url ? (
+                            <img
+                              src={u.avatar_url}
+                              alt=""
+                              className="size-8 rounded-full object-cover"
+                            />
+                          ) : (
+                            <div className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
+                              {(u.display_name ||
+                                u.email ||
+                                'U')[0].toUpperCase()}
+                            </div>
+                          )}
+                          <span className="text-foreground">
+                            {u.email || '—'}
+                          </span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-foreground">
+                        {u.display_name || '—'}
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex flex-wrap gap-1">
+                          {u.roles && u.roles.length > 0 ? (
+                            u.roles.map((r) => (
+                              <Badge
+                                key={r}
+                                variant="outline"
+                                className="text-xs"
+                              >
+                                {r}
+                              </Badge>
+                            ))
+                          ) : (
+                            <span className="text-xs text-muted-foreground">
+                              —
+                            </span>
+                          )}
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex items-center justify-end gap-1">
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon-sm"
+                            onClick={() => handleOpenDetails(u.id)}
+                            aria-label={t('iam.users.viewDetails')}
+                            title={t('iam.users.viewDetails')}
+                          >
+                            <Eye className="size-4" />
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon-sm"
+                            onClick={() => handleOpenRoles(u)}
+                            aria-label={t('iam.users.manageRoles')}
+                            title={t('iam.users.manageRoles')}
+                          >
+                            <Shield className="size-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </div>
 
           {/* Pagination bar */}
           <div className="flex items-center justify-between border-t border-border px-4 py-3 sm:px-6">

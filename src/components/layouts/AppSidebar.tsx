@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
+  ChevronDown,
   Fingerprint,
   KeyRound,
   LayoutDashboard,
@@ -11,10 +12,10 @@ import {
   Users,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { cn } from 'cn';
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -23,10 +24,63 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  SidebarTrigger,
 } from '@/components/ui/sidebar';
 import { iamService } from '@/services';
 
-const CURRENT_YEAR = new Date().getFullYear();
+interface NavItem {
+  title: string;
+  url: string;
+  icon: typeof Users;
+  isActive: boolean;
+}
+
+interface SidebarNavGroupProps {
+  title: string;
+  items: NavItem[];
+}
+
+function SidebarNavGroup({ title, items }: SidebarNavGroupProps) {
+  const [open, setOpen] = useState(true);
+
+  return (
+    <SidebarGroup>
+      <SidebarGroupLabel
+        render={<button type="button" />}
+        onClick={() => setOpen((prev) => !prev)}
+        aria-expanded={open}
+        className="flex w-full cursor-pointer items-center justify-between gap-2 hover:text-sidebar-foreground"
+      >
+        <span>{title}</span>
+        <ChevronDown
+          className={cn(
+            'size-3.5 shrink-0 transition-transform duration-200',
+            !open && '-rotate-90',
+          )}
+          aria-hidden="true"
+        />
+      </SidebarGroupLabel>
+      {open && (
+        <SidebarGroupContent>
+          <SidebarMenu>
+            {items.map((item) => (
+              <SidebarMenuItem key={item.title}>
+                <SidebarMenuButton
+                  render={<Link to={item.url} />}
+                  tooltip={item.title}
+                  isActive={item.isActive}
+                >
+                  <item.icon />
+                  <span>{item.title}</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
+        </SidebarGroupContent>
+      )}
+    </SidebarGroup>
+  );
+}
 
 export function AppSidebar() {
   const { t } = useTranslation();
@@ -48,7 +102,7 @@ export function AppSidebar() {
     };
   }, []);
 
-  const navGroups = [
+  const navGroups: SidebarNavGroupProps[] = [
     {
       title: t('sidebar.nav.application'),
       items: [
@@ -120,62 +174,39 @@ export function AppSidebar() {
 
   return (
     <Sidebar collapsible="icon">
-      {/* Sidebar Header with brand badge */}
+      {/* Sidebar Header with brand badge and the sidebar collapse toggle */}
       <SidebarHeader className="border-b border-sidebar-border p-3">
-        <Link
-          to="/a"
-          className="flex items-center gap-2.5 rounded-lg p-1 transition-opacity hover:opacity-90 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-sidebar-ring"
-        >
-          <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-sidebar-primary text-sm font-bold text-sidebar-primary-foreground shadow-xs">
-            A
-          </div>
-          <div className="flex flex-col overflow-hidden group-data-[collapsible=icon]:hidden">
-            <span className="truncate text-sm font-bold tracking-tight text-sidebar-foreground">
-              {t('sidebar.brandTitle')}
-            </span>
-            <span className="truncate text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
-              {t('sidebar.brandSubtitle')}
-            </span>
-          </div>
-        </Link>
+        <div className="flex items-center justify-between gap-2 group-data-[collapsible=icon]:flex-col-reverse group-data-[collapsible=icon]:gap-2">
+          <Link
+            to="/a"
+            className="flex min-w-0 items-center gap-2.5 rounded-lg p-1 transition-opacity hover:opacity-90 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-sidebar-ring"
+          >
+            <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-sidebar-primary text-sm font-bold text-sidebar-primary-foreground shadow-xs">
+              A
+            </div>
+            <div className="flex flex-col overflow-hidden group-data-[collapsible=icon]:hidden">
+              <span className="truncate text-sm font-bold tracking-tight text-sidebar-foreground">
+                {t('sidebar.brandTitle')}
+              </span>
+              <span className="truncate text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
+                {t('sidebar.brandSubtitle')}
+              </span>
+            </div>
+          </Link>
+          <SidebarTrigger className="shrink-0" />
+        </div>
       </SidebarHeader>
 
       {/* Navigation Menu */}
       <SidebarContent>
         {navGroups.map((group) => (
-          <SidebarGroup key={group.title}>
-            <SidebarGroupLabel>{group.title}</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {group.items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton
-                      render={<Link to={item.url} />}
-                      tooltip={item.title}
-                      isActive={item.isActive}
-                    >
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
+          <SidebarNavGroup
+            key={group.title}
+            title={group.title}
+            items={group.items}
+          />
         ))}
       </SidebarContent>
-
-      {/* Sidebar Footer */}
-      <SidebarFooter className="border-t border-sidebar-border p-3 group-data-[collapsible=icon]:p-2">
-        <div className="flex items-center justify-between text-xs text-muted-foreground group-data-[collapsible=icon]:justify-center">
-          <span className="truncate group-data-[collapsible=icon]:hidden">
-            © {CURRENT_YEAR} Anlew
-          </span>
-          <span className="font-mono text-[10px] text-muted-foreground/80 group-data-[collapsible=icon]:hidden">
-            v1.0
-          </span>
-        </div>
-      </SidebarFooter>
 
       {/* Sidebar resize & toggle rail */}
       <SidebarRail />

@@ -91,7 +91,7 @@ export const SessionsPage = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="w-full min-w-0 space-y-6">
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
@@ -133,102 +133,104 @@ export const SessionsPage = () => {
             </div>
           )}
 
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>{t('iam.sessions.colId')}</TableHead>
-                <TableHead>{t('iam.sessions.colUser')}</TableHead>
-                <TableHead>{t('iam.sessions.colClient')}</TableHead>
-                <TableHead>{t('iam.sessions.colProvider')}</TableHead>
-                <TableHead>{t('iam.sessions.colCreated')}</TableHead>
-                <TableHead>{t('iam.sessions.colExpires')}</TableHead>
-                <TableHead>{t('iam.common.status')}</TableHead>
-                <TableHead className="text-right">
-                  {t('iam.common.actions')}
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {loading ? (
+          <div className="w-full min-w-0 overflow-x-auto">
+            <Table>
+              <TableHeader>
                 <TableRow>
-                  <TableCell
-                    colSpan={8}
-                    className="h-24 text-center text-muted-foreground"
-                  >
-                    {t('iam.common.loading')}
-                  </TableCell>
+                  <TableHead>{t('iam.sessions.colId')}</TableHead>
+                  <TableHead>{t('iam.sessions.colUser')}</TableHead>
+                  <TableHead>{t('iam.sessions.colClient')}</TableHead>
+                  <TableHead>{t('iam.sessions.colProvider')}</TableHead>
+                  <TableHead>{t('iam.sessions.colCreated')}</TableHead>
+                  <TableHead>{t('iam.sessions.colExpires')}</TableHead>
+                  <TableHead>{t('iam.common.status')}</TableHead>
+                  <TableHead className="text-right">
+                    {t('iam.common.actions')}
+                  </TableHead>
                 </TableRow>
-              ) : sessions.length === 0 ? (
-                <TableRow>
-                  <TableCell
-                    colSpan={8}
-                    className="h-24 text-center text-muted-foreground"
-                  >
-                    {t('iam.common.noData')}
-                  </TableCell>
-                </TableRow>
-              ) : (
-                sessions.map((s) => (
-                  <TableRow key={s.id}>
-                    <TableCell className="font-mono text-xs text-muted-foreground">
-                      {s.id}
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <KeyRound className="size-4 text-primary" />
-                        <div>
-                          <p className="font-medium text-foreground">
-                            {s.user_name}
-                          </p>
-                          <p className="text-xs text-muted-foreground">
-                            {s.user_email}
-                          </p>
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-xs text-muted-foreground">
-                      {s.client_name}
-                    </TableCell>
-                    <TableCell className="text-xs capitalize text-muted-foreground">
-                      {s.provider}
-                    </TableCell>
-                    <TableCell className="text-xs text-muted-foreground">
-                      {new Date(s.created_at).toLocaleString()}
-                    </TableCell>
-                    <TableCell className="text-xs text-muted-foreground">
-                      {new Date(s.expires_at).toLocaleString()}
-                    </TableCell>
-                    <TableCell>
-                      {s.revoked_at ? (
-                        <Badge variant="secondary" className="text-[10px]">
-                          {t('iam.sessions.revoked')}
-                        </Badge>
-                      ) : (
-                        <Badge variant="default" className="text-[10px]">
-                          {t('iam.common.active')}
-                        </Badge>
-                      )}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      {!s.revoked_at && (
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon-sm"
-                          onClick={() => handleOpenRevoke(s)}
-                          aria-label={t('iam.sessions.revoke')}
-                          title={t('iam.sessions.revoke')}
-                          className="text-destructive"
-                        >
-                          <LogOut className="size-4" />
-                        </Button>
-                      )}
+              </TableHeader>
+              <TableBody>
+                {loading ? (
+                  <TableRow>
+                    <TableCell
+                      colSpan={8}
+                      className="h-24 text-center text-muted-foreground"
+                    >
+                      {t('iam.common.loading')}
                     </TableCell>
                   </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
+                ) : sessions.length === 0 ? (
+                  <TableRow>
+                    <TableCell
+                      colSpan={8}
+                      className="h-24 text-center text-muted-foreground"
+                    >
+                      {t('iam.common.noData')}
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  sessions.map((s) => (
+                    <TableRow key={s.id}>
+                      <TableCell className="font-mono text-xs text-muted-foreground">
+                        {s.id}
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-2">
+                          <KeyRound className="size-4 text-primary" />
+                          <div>
+                            <p className="font-medium text-foreground">
+                              {s.user_name}
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              {s.user_email}
+                            </p>
+                          </div>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-xs text-muted-foreground">
+                        {s.client_name}
+                      </TableCell>
+                      <TableCell className="text-xs capitalize text-muted-foreground">
+                        {s.provider}
+                      </TableCell>
+                      <TableCell className="text-xs text-muted-foreground">
+                        {new Date(s.created_at).toLocaleString()}
+                      </TableCell>
+                      <TableCell className="text-xs text-muted-foreground">
+                        {new Date(s.expires_at).toLocaleString()}
+                      </TableCell>
+                      <TableCell>
+                        {s.revoked_at ? (
+                          <Badge variant="secondary" className="text-[10px]">
+                            {t('iam.sessions.revoked')}
+                          </Badge>
+                        ) : (
+                          <Badge variant="default" className="text-[10px]">
+                            {t('iam.common.active')}
+                          </Badge>
+                        )}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        {!s.revoked_at && (
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon-sm"
+                            onClick={() => handleOpenRevoke(s)}
+                            aria-label={t('iam.sessions.revoke')}
+                            title={t('iam.sessions.revoke')}
+                            className="text-destructive"
+                          >
+                            <LogOut className="size-4" />
+                          </Button>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </div>
 
           {/* Pagination bar */}
           <div className="flex items-center justify-between border-t border-border px-4 py-3 sm:px-6">
