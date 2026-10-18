@@ -10,7 +10,9 @@
     "status": {
       "loading": "Loading...",
       "verifying": "Verifying sign in...",
-      "checkingSession": "Checking session..."
+      "checkingSession": "Checking session...",
+      "yes": "Yes",
+      "no": "No"
     },
     "errors": {
       "unexpected": "Something went wrong. Please try again.",
@@ -21,7 +23,7 @@
   "auth": {
     "login": {
       "title": "Sign in",
-      "subtitle": "Select a provider to continue to Anthony Lewis admin.",
+      "subtitle": "Select a provider to continue to Anlew admin.",
       "errorTitle": "Authentication Error",
       "continueWithGoogle": "Continue with Google",
       "googleAriaLabel": "Sign in with Google",
@@ -46,12 +48,12 @@
         "monitoring": "System monitoring",
         "fastOps": "Fast operations"
       },
-      "copyright": "Anthony Lewis"
+      "copyright": "Anlew"
     }
   },
   "home": {
     "badge": "Admin Portal",
-    "title": "Anthony Lewis",
+    "title": "Anlew",
     "subtitle": "Centralized management console and operations.",
     "userCard": {
       "title": "Administrator Profile",
@@ -60,30 +62,28 @@
       "identityId": "Identity ID",
       "email": "Email",
       "displayName": "Display Name",
+      "roles": "Roles",
+      "isAdmin": "Admin",
       "notProvided": "Not provided",
       "avatarAlt": "User avatar",
       "defaultAvatarAlt": "Default user avatar",
       "logout": "Sign out",
       "loggingOut": "Signing out...",
       "logoutErrorTitle": "Sign out failed",
-      "logoutError": "Unable to sign out. Please try again."
+      "logoutError": "Unable to sign out. Please try again.",
+      "loadErrorTitle": "Unable to load session"
     },
-    "features": {
-      "performance": {
-        "title": "High Performance",
-        "description": "Fast navigation and real-time updates."
-      },
-      "security": {
-        "title": "Secure",
-        "description": "Role-based access and protected workflows."
-      },
-      "controlPlane": {
-        "title": "Control Plane",
-        "description": "Unified tools for system administration."
-      }
+    "counts": {
+      "title": "Console Resources",
+      "users": "Users",
+      "identities": "Identities",
+      "roles": "Roles",
+      "sessions": "Sessions",
+      "clients": "Registrations"
     },
-    "actions": {
-      "docs": "Docs"
+    "standardUser": {
+      "title": "Welcome",
+      "description": "You are signed in as a standard user. Administrative sections are restricted to administrators."
     }
   },
   "publicLayout": {
@@ -102,5 +102,219 @@
     "errorTitle": "Unable to verify session",
     "errorMessage": "A network or server error occurred while verifying your session.",
     "retry": "Try again"
+  },
+  "header": {
+    "brandSubtitle": "Web Admin",
+    "search": {
+      "placeholder": "Search or type a command...",
+      "shortPlaceholder": "Search...",
+      "ariaLabel": "Open quick search and command palette"
+    },
+    "commandPalette": {
+      "title": "Command Palette",
+      "description": "Quickly search pages and run administration commands.",
+      "inputPlaceholder": "Type a command or search...",
+      "empty": "No results found.",
+      "groups": {
+        "navigation": "Navigation",
+        "account": "Account",
+        "actions": "Actions"
+      }
+    },
+    "menu": {
+      "profile": "Profile",
+      "settings": "Settings",
+      "logout": "Sign out",
+      "home": "Home",
+      "documentation": "Documentation",
+      "support": "Support",
+      "defaultUser": "Administrator",
+      "userMenuAriaLabel": "Open user menu"
+    },
+    "actions": {
+      "signIn": "Sign in"
+    }
+  },
+  "sidebar": {
+    "brandTitle": "Anlew",
+    "brandSubtitle": "Admin Portal",
+    "nav": {
+      "application": "Application",
+      "auth": "Auth",
+      "system": "System"
+    },
+    "items": {
+      "overview": "Overview",
+      "users": "Users",
+      "identities": "Identities",
+      "roles": "Roles",
+      "sessions": "Sessions",
+      "registrations": "Registrations",
+      "profile": "Profile",
+      "settings": "Settings"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Manage application preferences and administrative configurations.",
+    "badge": "Preferences",
+    "general": {
+      "title": "General",
+      "description": "Language, theme and platform preferences."
+    },
+    "account": {
+      "title": "Account Details",
+      "description": "Personal details and identity provider info."
+    },
+    "security": {
+      "title": "Security & Sessions",
+      "description": "Active session tokens and CSRF protection."
+    }
+  },
+  "profile": {
+    "badge": "Account",
+    "title": "Profile",
+    "subtitle": "View your account identity and update your display details.",
+    "card": {
+      "title": "Profile Details",
+      "description": "Your canonical identity and display preferences."
+    },
+    "fields": {
+      "userId": "User ID",
+      "email": "Email",
+      "displayName": "Display Name",
+      "displayNamePlaceholder": "e.g. Jane Doe",
+      "avatarUrl": "Avatar URL",
+      "avatarUrlPlaceholder": "https://example.com/avatar.png"
+    },
+    "save": "Save changes",
+    "success": "Profile updated successfully.",
+    "errors": {
+      "displayNameRequired": "Display name cannot be empty."
+    }
+  },
+  "iam": {
+    "access": {
+      "deniedTitle": "Access Denied",
+      "deniedDescription": "Administrator privileges are required to access this resource. You are currently signed in as a standard user.",
+      "viewProfile": "View Profile",
+      "standardUser": "Standard User",
+      "adminUser": "Administrator"
+    },
+    "common": {
+      "search": "Search...",
+      "filter": "Filter",
+      "status": "Status",
+      "actions": "Actions",
+      "loading": "Loading data...",
+      "noData": "No records found.",
+      "page": "Page {{current}} of {{total}}",
+      "prev": "Previous",
+      "next": "Next",
+      "all": "All",
+      "active": "Active",
+      "enabled": "Enabled",
+      "disabled": "Disabled",
+      "delete": "Delete",
+      "edit": "Edit",
+      "save": "Save changes",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "createdAt": "Created",
+      "updatedAt": "Updated",
+      "success": "Action completed successfully.",
+      "error": "An error occurred. Please try again."
+    },
+    "users": {
+      "title": "Users",
+      "subtitle": "Manage authenticated users and role assignments.",
+      "filterRole": "Filter by role",
+      "colEmail": "Email",
+      "colDisplayName": "Display Name",
+      "colRoles": "Roles",
+      "userId": "User ID",
+      "viewDetails": "View Details",
+      "manageRoles": "Manage Roles",
+      "rolesModalTitle": "Assign Roles",
+      "rolesModalDesc": "Select roles for this user:",
+      "detailsModalTitle": "User Details",
+      "linkedIdentities": "Linked Identities",
+      "noIdentities": "No linked identities."
+    },
+    "identities": {
+      "title": "Identities",
+      "subtitle": "Federated identity bindings across third-party authentication providers.",
+      "colProvider": "Provider",
+      "colSubject": "Provider Subject",
+      "colUserEmail": "User Email",
+      "colName": "Name",
+      "colVerified": "Verified",
+      "colCreated": "Created At",
+      "verified": "Verified",
+      "unverified": "Unverified"
+    },
+    "roles": {
+      "title": "Roles",
+      "subtitle": "Configure the roles assignable to users.",
+      "createRole": "Create Role",
+      "colKey": "Key",
+      "colName": "Name",
+      "colUsers": "Users Assigned",
+      "colCreated": "Created At",
+      "createTitle": "Create New Role",
+      "editTitle": "Edit Role",
+      "roleKey": "Key",
+      "roleName": "Name",
+      "deleteConfirm": "Are you sure you want to delete this role? This cannot be undone."
+    },
+    "sessions": {
+      "title": "Sessions",
+      "subtitle": "Monitor and manage user authentication sessions.",
+      "activeOnly": "Active only",
+      "colId": "Session ID",
+      "colUser": "User",
+      "colClient": "Client",
+      "colProvider": "Provider",
+      "colCreated": "Created At",
+      "colExpires": "Expires At",
+      "revoked": "Revoked",
+      "revoke": "Revoke",
+      "revokeConfirm": "Revoke this user session immediately?"
+    },
+    "clients": {
+      "title": "Registrations",
+      "subtitle": "Manage OAuth provider client registrations used for sign-in.",
+      "colProvider": "Provider",
+      "colId": "Client ID",
+      "colName": "Name",
+      "colCallbackUrl": "Callback URL",
+      "colRedirects": "Approved Redirects",
+      "colStatus": "Status",
+      "enable": "Enable",
+      "disable": "Disable",
+      "enableConfirm": "Enable this client registration?",
+      "disableConfirm": "Disable this client registration? Sign-ins using it will stop working.",
+      "registerButton": "Register OAuth Client",
+      "registerTitle": "Register OAuth Client",
+      "registerSubtitle": "Register or update a provider client used for sign-in.",
+      "fieldProvider": "Provider",
+      "fieldClientId": "Provider Client ID",
+      "fieldName": "Name",
+      "fieldClientSecret": "Provider Client Secret",
+      "fieldClientSecretHelp": "OAuth app secret from the Google/GitHub console.",
+      "fieldAuthSecret": "Backend Auth Secret",
+      "fieldAuthSecretHelp": "Shared secret authenticating this app to go-auth.",
+      "fieldRedirectUrl": "Callback URL",
+      "fieldRedirectUris": "Approved Redirect URIs",
+      "fieldRedirectUrisHelp": "Comma-separated list of approved redirect URIs.",
+      "fieldEnabled": "Enabled",
+      "secretsNote": "Secrets are encrypted or hashed on the backend and are never returned, prefilled, or logged.",
+      "formIncomplete": "Please fill in all required fields.",
+      "viewDetails": "View Details",
+      "detailsModalTitle": "Registration Details",
+      "detailsId": "ID",
+      "detailsCreatedAt": "Created At",
+      "detailsUpdatedAt": "Updated At"
+    }
   }
 }

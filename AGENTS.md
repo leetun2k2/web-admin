@@ -1,5 +1,23 @@
 # Agent Instructions
 
+## Product and Backend Priority
+
+This is the technical console of an SMB technology product. A sound backend
+core comes first: contracts, security, data integrity, and operations. Product
+features come later. Build UI around verified APIs and real technical resources;
+do not extend the schema to justify a screen.
+
+Read the [SMB core plan](../go-auth/specs/2026-10-17-smb-auth-core/00-overview.md)
+for this rebuild. The target console covers users, identities, direct roles,
+sessions, and provider registrations in `clients`. Groups, permission builders,
+separate provider CRUD, and fake analytics are outside this core release.
+Represent missing capabilities honestly; never simulate operational success.
+
+Agy orchestrates tasks and phase review. Claude implements bounded tasks after
+the backend contract is set. Coordinate changes with `go-auth`,
+`web-admin-auth`, and `infra`. Keep secrets and session JWTs in the adapter;
+enforce authorization on the backend.
+
 ## Scope and Role
 
 - Act as a Principal Software Engineer. These rules apply to the whole repo.
@@ -98,11 +116,11 @@
 ## Internationalization (Mandatory)
 
 English (`en`) MUST be the default and fallback locale. New or changed UI MUST
-be ready for translation. The repo currently has no i18n library; the paths and
-examples below define the setup to add when implementing i18n.
+be ready for translation. The repo already uses `i18next` and `react-i18next`
+through `src/i18n/index.ts`; extend the existing setup.
 
-- Use `i18next` with `react-i18next` for React translations. Initialize it once
-  through `src/i18n/index.ts`, imported from `src/main.tsx` before rendering.
+- Use the existing `i18next` and `react-i18next` setup for React translations.
+  Keep initialization in `src/i18n/index.ts`, imported before app rendering.
 - Keep the English catalog in `src/i18n/locales/en.json`. Add other locale
   catalogs only when requested, using the same key structure.
 - Use `useTranslation()` and `t()` for all user-facing text, including titles,

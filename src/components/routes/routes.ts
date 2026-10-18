@@ -1,8 +1,8 @@
 import type { RouteObject } from 'react-router-dom';
 import { createBrowserRouter } from 'react-router-dom';
-import { authRoutes } from './auth';
+import { protectedRoutes } from './protected';
 import { publicRoutes } from './public';
 
-export const routes: RouteObject[] = [...authRoutes, ...publicRoutes];
+export const routes: RouteObject[] = [...protectedRoutes, ...publicRoutes];
 
 export const router = createBrowserRouter(routes);

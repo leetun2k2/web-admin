@@ -10,8 +10,6 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
-const CURRENT_YEAR = new Date().getFullYear();
-
 export interface AuthLayoutProps {
   children?: ReactNode;
   title?: string;
@@ -22,24 +20,22 @@ export const AuthLayout = ({ children, title, subtitle }: AuthLayoutProps) => {
   const { t } = useTranslation();
 
   return (
-    <div className="flex min-h-svh w-full bg-background text-foreground">
-      {/* Brand sidebar on large screens */}
-      <aside className="relative hidden flex-1 flex-col justify-between border-r border-border bg-muted/40 p-12 lg:flex">
+    <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center gap-8 p-6 lg:flex-row lg:items-center lg:justify-between lg:gap-12 lg:p-12">
+      {/* Brand feature summary on large screens */}
+      <div className="hidden max-w-md space-y-6 lg:block">
         <div className="flex items-center gap-3">
           <div className="flex size-11 items-center justify-center rounded-xl bg-primary text-xl font-bold text-primary-foreground shadow-sm">
             A
           </div>
           <div>
-            <h1 className="text-xl font-semibold text-foreground">
-              Anthony Lewis
-            </h1>
+            <h1 className="text-xl font-semibold text-foreground">Anlew</h1>
             <p className="text-xs text-muted-foreground">
               {t('auth.layout.portalTitle')}
             </p>
           </div>
         </div>
 
-        <div className="my-auto max-w-sm space-y-6">
+        <div className="space-y-4">
           <h2 className="text-2xl font-semibold tracking-tight text-foreground">
             {t('auth.layout.administration')}
           </h2>
@@ -65,43 +61,35 @@ export const AuthLayout = ({ children, title, subtitle }: AuthLayoutProps) => {
             </li>
           </ul>
         </div>
+      </div>
 
-        <div className="text-xs text-muted-foreground">
-          © {CURRENT_YEAR} Anthony Lewis
-        </div>
-      </aside>
-
-      {/* Main form section */}
-      <main className="flex flex-1 flex-col items-center justify-center p-6 sm:p-10">
-        <div className="w-full max-w-md space-y-6">
-          {/* Mobile brand header */}
-          <div className="flex flex-col items-center gap-2 text-center lg:hidden">
-            <div className="flex size-11 items-center justify-center rounded-xl bg-primary text-xl font-bold text-primary-foreground shadow-sm">
-              A
-            </div>
-            <h2 className="text-xl font-semibold text-foreground">
-              Anthony Lewis
-            </h2>
-            <p className="text-xs text-muted-foreground">
-              {t('auth.layout.portalTitle')}
-            </p>
+      {/* Main auth card */}
+      <div className="w-full max-w-md space-y-6">
+        {/* Mobile brand badge */}
+        <div className="flex flex-col items-center gap-2 text-center lg:hidden">
+          <div className="flex size-11 items-center justify-center rounded-xl bg-primary text-xl font-bold text-primary-foreground shadow-sm">
+            A
           </div>
-
-          <Card className="border-border shadow-sm">
-            {(title || subtitle) && (
-              <CardHeader className="text-center">
-                {title && <CardTitle className="text-xl">{title}</CardTitle>}
-                {subtitle && (
-                  <CardDescription className="text-sm">
-                    {subtitle}
-                  </CardDescription>
-                )}
-              </CardHeader>
-            )}
-            <CardContent>{children ?? <Outlet />}</CardContent>
-          </Card>
+          <h2 className="text-xl font-semibold text-foreground">Anlew</h2>
+          <p className="text-xs text-muted-foreground">
+            {t('auth.layout.portalTitle')}
+          </p>
         </div>
-      </main>
+
+        <Card className="border-border shadow-sm">
+          {(title || subtitle) && (
+            <CardHeader className="text-center">
+              {title && <CardTitle className="text-xl">{title}</CardTitle>}
+              {subtitle && (
+                <CardDescription className="text-sm">
+                  {subtitle}
+                </CardDescription>
+              )}
+            </CardHeader>
+          )}
+          <CardContent>{children ?? <Outlet />}</CardContent>
+        </Card>
+      </div>
     </div>
   );
 };

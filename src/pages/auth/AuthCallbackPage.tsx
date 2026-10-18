@@ -18,7 +18,7 @@ export const AuthCallbackPage = () => {
     const checkSession = async () => {
       try {
         await authService.getCurrentUser();
-        navigate('/', { replace: true });
+        navigate('/a', { replace: true });
       } catch {
         navigate('/auth/login?error=invalid_request', { replace: true });
       }
