@@ -4,9 +4,11 @@ import axios from 'axios';
 declare module 'axios' {
   export interface AxiosRequestConfig {
     _isCsrfRetry?: boolean;
+    _isAuthRetry?: boolean;
   }
   export interface InternalAxiosRequestConfig {
     _isCsrfRetry?: boolean;
+    _isAuthRetry?: boolean;
   }
 }
 
@@ -120,6 +122,46 @@ authedClient.interceptors.request.use(async (config) => {
   return config;
 });
 
+const REFRESH_PATH = '/auth/v1/refresh';
+
+let pendingRefreshPromise: Promise<boolean> | null = null;
+
+/**
+ * Rotates the session via the adapter's refresh cookie, deduping concurrent
+ * callers so one in-flight request serves every 401 raised at the same time.
+ * Returns false (and clears the cached CSRF token) on any failure: an
+ * expired refresh cookie, a revoked session, or a dependency error all mean
+ * the caller must fall back to its normal unauthorized handling.
+ */
+const refreshSession = async (): Promise<boolean> => {
+  if (pendingRefreshPromise) {
+    return pendingRefreshPromise;
+  }
+
+  pendingRefreshPromise = (async () => {
+    try {
+      const csrfToken = await getCsrfToken();
+      await axios.post(REFRESH_PATH, null, {
+        baseURL: '/api',
+        withCredentials: true,
+        timeout: 10000,
+        headers: {
+          'Cache-Control': 'no-store',
+          ...(csrfToken ? { 'X-CSRF-Token': csrfToken } : {}),
+        },
+      });
+      return true;
+    } catch {
+      clearCsrfToken();
+      return false;
+    } finally {
+      pendingRefreshPromise = null;
+    }
+  })();
+
+  return pendingRefreshPromise;
+};
+
 const isCsrfError = (error: AxiosError): boolean => {
   if (error.response?.status !== 403) {
     return false;
@@ -153,11 +195,25 @@ authedClient.interceptors.response.use(
   (response) => response,
   async (error: unknown) => {
     if (axios.isAxiosError(error)) {
+      const config = error.config as InternalAxiosRequestConfig | undefined;
+
       if (error.response?.status === 401) {
         clearCsrfToken();
+
+        const isRefreshCall = config?.url?.includes(REFRESH_PATH) ?? false;
+        if (config && !config._isAuthRetry && !isRefreshCall) {
+          config._isAuthRetry = true;
+          const refreshed = await refreshSession();
+          if (refreshed) {
+            try {
+              return await authedClient.request(config);
+            } catch (retryError) {
+              return Promise.reject(retryError);
+            }
+          }
+        }
       }
 
-      const config = error.config as InternalAxiosRequestConfig | undefined;
       const method = config?.method?.toUpperCase();
       if (
         config &&
