@@ -16,7 +16,7 @@ import {
 
 export const protectedRoutes: RouteObject[] = [
   {
-    path: '/a',
+    path: '/app',
     element: (
       <RequireAuth>
         <ProtectedLayout />

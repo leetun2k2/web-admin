@@ -132,11 +132,11 @@ export const Header = ({ user: propUser, hideBrand = false }: HeaderProps) => {
   };
 
   const handleProfile = () => {
-    navigate('/a/profile');
+    navigate('/app/profile');
   };
 
   const handleSettings = () => {
-    navigate('/a/settings');
+    navigate('/app/settings');
   };
 
   const executeCommand = (action: () => void) => {
@@ -154,10 +154,10 @@ export const Header = ({ user: propUser, hideBrand = false }: HeaderProps) => {
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
+      <header className="sticky top-0 z-50 flex h-14 shrink-0 items-center border-b border-border bg-background/80 backdrop-blur-md">
         <div
           className={cn(
-            'flex items-center justify-between gap-4 px-4 py-3 sm:px-6',
+            'flex h-full w-full items-center justify-between gap-4 px-4 sm:px-6',
             hideBrand ? 'w-full lg:px-8' : 'mx-auto max-w-6xl',
           )}
         >
@@ -316,7 +316,7 @@ export const Header = ({ user: propUser, hideBrand = false }: HeaderProps) => {
             >
               <CommandItem
                 onSelect={() =>
-                  executeCommand(() => navigate(hideBrand ? '/a' : '/'))
+                  executeCommand(() => navigate(hideBrand ? '/app' : '/'))
                 }
               >
                 <Home aria-hidden="true" />
@@ -339,7 +339,7 @@ export const Header = ({ user: propUser, hideBrand = false }: HeaderProps) => {
                 <CommandGroup heading={t('sidebar.nav.auth')}>
                   <CommandItem
                     onSelect={() =>
-                      executeCommand(() => navigate('/a/auth/users'))
+                      executeCommand(() => navigate('/app/auth/users'))
                     }
                   >
                     <Users aria-hidden="true" />
@@ -347,7 +347,7 @@ export const Header = ({ user: propUser, hideBrand = false }: HeaderProps) => {
                   </CommandItem>
                   <CommandItem
                     onSelect={() =>
-                      executeCommand(() => navigate('/a/auth/identities'))
+                      executeCommand(() => navigate('/app/auth/identities'))
                     }
                   >
                     <UserCheck aria-hidden="true" />
@@ -355,7 +355,7 @@ export const Header = ({ user: propUser, hideBrand = false }: HeaderProps) => {
                   </CommandItem>
                   <CommandItem
                     onSelect={() =>
-                      executeCommand(() => navigate('/a/auth/roles'))
+                      executeCommand(() => navigate('/app/auth/roles'))
                     }
                   >
                     <KeyRound aria-hidden="true" />
@@ -363,7 +363,7 @@ export const Header = ({ user: propUser, hideBrand = false }: HeaderProps) => {
                   </CommandItem>
                   <CommandItem
                     onSelect={() =>
-                      executeCommand(() => navigate('/a/auth/sessions'))
+                      executeCommand(() => navigate('/app/auth/sessions'))
                     }
                   >
                     <ShieldCheck aria-hidden="true" />
@@ -371,7 +371,7 @@ export const Header = ({ user: propUser, hideBrand = false }: HeaderProps) => {
                   </CommandItem>
                   <CommandItem
                     onSelect={() =>
-                      executeCommand(() => navigate('/a/auth/clients'))
+                      executeCommand(() => navigate('/app/auth/clients'))
                     }
                   >
                     <Fingerprint aria-hidden="true" />

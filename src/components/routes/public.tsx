@@ -13,7 +13,7 @@ export const publicRoutes: RouteObject[] = [
     children: [
       {
         index: true,
-        element: <Navigate to="/a" replace />,
+        element: <Navigate to="/app" replace />,
       },
       {
         path: 'auth',
@@ -39,11 +39,19 @@ export const publicRoutes: RouteObject[] = [
       },
       {
         path: 'profile',
-        element: <Navigate to="/a/profile" replace />,
+        element: <Navigate to="/app/profile" replace />,
       },
       {
         path: 'settings',
-        element: <Navigate to="/a/settings" replace />,
+        element: <Navigate to="/app/settings" replace />,
+      },
+      {
+        path: 'a/*',
+        element: <Navigate to="/app" replace />,
+      },
+      {
+        path: 'a',
+        element: <Navigate to="/app" replace />,
       },
       {
         path: '*',

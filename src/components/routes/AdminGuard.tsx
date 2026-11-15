@@ -73,7 +73,7 @@ export const AdminGuard = () => {
           </CardHeader>
           <CardContent />
           <CardFooter className="flex justify-center">
-            <Button render={<Link to="/a/profile" />} size="lg">
+            <Button render={<Link to="/app/profile" />} size="lg">
               {t('iam.access.viewProfile')}
             </Button>
           </CardFooter>

@@ -48,35 +48,35 @@ export const HomePage = () => {
       key: 'users',
       labelKey: 'home.counts.users',
       icon: Users,
-      url: '/a/auth/users',
+      url: '/app/auth/users',
       value: null,
     },
     {
       key: 'identities',
       labelKey: 'home.counts.identities',
       icon: UserCheck,
-      url: '/a/auth/identities',
+      url: '/app/auth/identities',
       value: null,
     },
     {
       key: 'roles',
       labelKey: 'home.counts.roles',
       icon: ShieldCheck,
-      url: '/a/auth/roles',
+      url: '/app/auth/roles',
       value: null,
     },
     {
       key: 'sessions',
       labelKey: 'home.counts.sessions',
       icon: KeyRound,
-      url: '/a/auth/sessions',
+      url: '/app/auth/sessions',
       value: null,
     },
     {
       key: 'clients',
       labelKey: 'home.counts.clients',
       icon: Fingerprint,
-      url: '/a/auth/clients',
+      url: '/app/auth/clients',
       value: null,
     },
   ]);
@@ -321,7 +321,7 @@ export const HomePage = () => {
                 type="button"
                 variant="outline"
                 size="sm"
-                render={<Link to="/a/profile" />}
+                render={<Link to="/app/profile" />}
               >
                 {t('iam.access.viewProfile')}
               </Button>
