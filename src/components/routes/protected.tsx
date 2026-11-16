@@ -12,7 +12,10 @@ import {
   RolesPage,
   SessionsPage,
   ClientsPage,
-} from '../../pages/iam';
+  ProductsPage,
+  ProductDetailPage,
+  PlanDetailPage,
+} from '../../pages';
 
 export const protectedRoutes: RouteObject[] = [
   {
@@ -57,6 +60,18 @@ export const protectedRoutes: RouteObject[] = [
           {
             path: 'auth/clients',
             element: <ClientsPage />,
+          },
+          {
+            path: 'products',
+            element: <ProductsPage />,
+          },
+          {
+            path: 'products/:productId',
+            element: <ProductDetailPage />,
+          },
+          {
+            path: 'products/:productId/plans/:planId',
+            element: <PlanDetailPage />,
           },
         ],
       },

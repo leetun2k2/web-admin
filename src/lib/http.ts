@@ -127,7 +127,7 @@ const REFRESH_PATH = '/auth/v1/refresh';
 let pendingRefreshPromise: Promise<boolean> | null = null;
 
 /**
- * Rotates the session via the adapter's refresh cookie, deduping concurrent
+ * Rotates the session via the go-auth refresh cookie, deduping concurrent
  * callers so one in-flight request serves every 401 raised at the same time.
  * Returns false (and clears the cached CSRF token) on any failure: an
  * expired refresh cookie, a revoked session, or a dependency error all mean

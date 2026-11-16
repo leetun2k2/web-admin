@@ -28,7 +28,7 @@ export const authService = {
   },
 
   /**
-   * Starts Google OAuth login by posting to the adapter's /login/google endpoint with CSRF token.
+   * Starts Google OAuth login by posting to go-auth's /login/google endpoint with CSRF token.
    * Redirects browser to Google's authorize URL returned in redirect_url.
    */
   async loginWithGoogle(): Promise<void> {

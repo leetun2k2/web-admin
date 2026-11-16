@@ -15,7 +15,7 @@ Represent missing capabilities honestly; never simulate operational success.
 
 Agy orchestrates tasks and phase review. Claude implements bounded tasks after
 the backend contract is set. Coordinate changes with `go-auth`,
-`web-admin-auth`, and `infra`. Keep secrets and session JWTs in the adapter;
+`infra`. Keep secrets and session JWTs in go-auth HttpOnly cookies;
 enforce authorization on the backend.
 
 ## Scope and Role

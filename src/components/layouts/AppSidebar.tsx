@@ -4,6 +4,7 @@ import {
   Fingerprint,
   KeyRound,
   LayoutDashboard,
+  Package,
   Settings,
   ShieldCheck,
   User,
@@ -84,6 +85,15 @@ export function AppSidebar() {
     icon: LayoutDashboard,
     isActive: location.pathname === '/app' || location.pathname === '/app/',
   };
+
+  const catalogItems: NavItem[] = [
+    {
+      title: t('sidebar.items.products'),
+      url: '/app/products',
+      icon: Package,
+      isActive: location.pathname.startsWith('/app/products'),
+    },
+  ];
 
   const authItems: NavItem[] = [
     {
@@ -192,6 +202,38 @@ export function AppSidebar() {
                 </span>
               </li>
               {authItems.map((item) => (
+                <SidebarMenuItem key={item.url}>
+                  <SidebarMenuButton
+                    render={<Link to={item.url} />}
+                    onClick={(e) => handleItemClick(e, item)}
+                    tooltip={item.title}
+                    isActive={item.isActive}
+                  >
+                    <item.icon />
+                    <span className="truncate group-data-[collapsible=icon]:hidden">
+                      {item.title}
+                    </span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </>
+          )}
+
+          {/* Section 2: Catalog (admin only) */}
+          {isAdmin && (
+            <>
+              <li
+                className="pointer-events-none my-1 flex h-6 list-none select-none items-center"
+                aria-hidden="true"
+              >
+                <span className="px-2 text-[11px] font-semibold tracking-wider text-muted-foreground uppercase group-data-[collapsible=icon]:hidden">
+                  {t('sidebar.nav.catalog')}
+                </span>
+                <span className="hidden w-full items-center justify-center group-data-[collapsible=icon]:flex">
+                  <span className="h-px w-5 bg-border/60" />
+                </span>
+              </li>
+              {catalogItems.map((item) => (
                 <SidebarMenuItem key={item.url}>
                   <SidebarMenuButton
                     render={<Link to={item.url} />}

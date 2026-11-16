@@ -5,3 +5,4 @@ export * from './public/NotFoundPage';
 export * from './public/SettingsPage';
 export * from './public/ProfilePage';
 export * from './iam';
+export * from './products';
